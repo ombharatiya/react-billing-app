@@ -4,7 +4,7 @@ import {
   BillsAction,
   BillsActions,
   // GetBillsStartPayload,
-} from "src/modules/billList/stores/actions/BillsActions";
+} from "src/stores/billsStores/actions/BillsActions";
 import BillsService from "src/modules/billList/services/BillsService";
 import { GetBillsResponse } from "src/modules/billList/services/getBills/GetBillsResponse.data";
 

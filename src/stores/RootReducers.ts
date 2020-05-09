@@ -1,6 +1,6 @@
-import { BillsState } from "src/modules/billList/stores/state/BillsState";
+import { BillsState } from "src/stores/billsStores/state/BillsState";
 import { combineReducers } from "redux";
-import { billsReducers } from "src/modules/billList/stores/reducers/BillsReducers";
+import { billsReducers } from "src/stores/billsStores/reducers/BillsReducers";
 
 /// <summary>
 /// Member names in ApplicationState must match member names in rootReducers

@@ -1,0 +1,9 @@
+.invalid {
+  border-color: crimson;
+  border-width: 3px;
+  /* color: crimson */
+}
+
+.half-width-screen {
+  max-width: 50%;
+}

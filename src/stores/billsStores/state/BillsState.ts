@@ -7,4 +7,6 @@ export class BillsState implements ReducerState {
   public readonly error: any | Error | undefined;
 
   public readonly bills: Bills | undefined;
+  public readonly selectedBillId: number | undefined;
+  public readonly newBillId!: number;
 }

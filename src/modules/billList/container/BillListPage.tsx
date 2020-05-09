@@ -13,7 +13,7 @@ import { ApplicationState } from "src/stores/RootReducers";
 import { ReducerState } from "src/stores/StoreHelper";
 import { Bills } from "src/model/Bill";
 import { AnyAction } from "redux";
-import { BillsActions } from "../stores/actions/BillsActions";
+import { BillsActions } from "../../../stores/billsStores/actions/BillsActions";
 
 // export interface IProps {
 //   bills: Bill[];
@@ -69,7 +69,7 @@ const mapDispatchToProps: (
   dispatch: React.Dispatch<AnyAction>
 ) => PropsFromDispatch = (dispatch) => ({
   onSelectBill: (billId: string) => {
-    dispatch(BillsActions.getSelectedBill({ billId }));
+    dispatch(BillsActions.getSelectedBill({ selectedBillId: billId }));
   },
   onInit: (props: Props) => {
     console.log("BillListPage onInit");
