@@ -13,7 +13,7 @@ import { ApplicationState } from "src/stores/RootReducers";
 import { ReducerState } from "src/stores/StoreHelper";
 import { Bills } from "src/model/Bill";
 import { AnyAction } from "redux";
-import { BillsActions } from "../store/actions/BillsActions";
+import { BillsActions } from "../stores/actions/BillsActions";
 
 // export interface IProps {
 //   bills: Bill[];
@@ -33,11 +33,11 @@ type PropsFromRoute = RouteComponentProps<{}>;
 export type Props = PropsFromState & PropsFromRoute & PropsFromDispatch;
 
 class BillListPage extends React.Component<Props, {}> {
-  // constructor(props: Props, context: any) {
-  //   super(props, context);
-  //   // console.log()
-  //   // this.initialize(props);
-  // }
+  constructor(props: Props, context: any) {
+    super(props, context);
+    // console.log()
+    this.initialize(props);
+  }
 
   public render() {
     return (
@@ -46,9 +46,9 @@ class BillListPage extends React.Component<Props, {}> {
       </div>
     );
   }
-  // private initialize(props: Props) {
-  //   this.props.onInit(props);
-  // }
+  private initialize(props: Props) {
+    this.props.onInit(props);
+  }
 }
 
 const mapStateToProps: (state: ApplicationState) => PropsFromState = (
@@ -72,7 +72,7 @@ const mapDispatchToProps: (
     dispatch(BillsActions.getSelectedBill({ billId }));
   },
   onInit: (props: Props) => {
-    // console.log("BillListPage onInit");
+    console.log("BillListPage onInit");
     dispatch(BillsActions.getBillsStart({}));
   },
 });
