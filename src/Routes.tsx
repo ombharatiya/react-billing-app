@@ -1,6 +1,6 @@
 export const routes = {
   home: {
-    view: () => "/home",
+    view: () => "/",
   },
   add: {
     view: () => "/add",
