@@ -21,6 +21,9 @@
 .padding-20px {
   padding: 20px;
 }
+.red-text {
+  color: red;
+}
 .App {
   text-align: center;
 }

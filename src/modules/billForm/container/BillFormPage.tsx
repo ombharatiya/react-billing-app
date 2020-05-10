@@ -86,10 +86,25 @@ class BillFormPage extends React.Component<Props, IState> {
     this.props.onInit();
   }
 
+  private currentBillState() {
+    if (this.props.selectedBillId === undefined) {
+      return this.defaultBillState();
+    }
+    return this.defaultBillState2();
+  }
+
   private defaultBillState = () => ({
     id: this.props.newBillId ? this.props.newBillId : 2000,
     description: "",
     amount: 0,
+    category: "Select a Category",
+    date: getCurrentDate(),
+  });
+
+  private defaultBillState2 = () => ({
+    id: this.props.newBillId ? this.props.newBillId : 2000,
+    description: "ABCD",
+    amount: 600000,
     category: "Select a Category",
     date: getCurrentDate(),
   });

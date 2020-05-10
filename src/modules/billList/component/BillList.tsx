@@ -3,6 +3,8 @@ import { IBillListProps } from "../types/IBillListProps";
 import { Bill } from "../../../model/Bill";
 // import BillCloseButton from "../billCloseButton/BillCloseButton";
 import Table from "react-bootstrap/Table";
+import BillCloseButton from "src/modules/billCloseButton/BillCloseButton";
+import BillEditButton from "src/modules/billEditButton/BillEditButton";
 // import { budget } from "src/utils/constants";
 // import Grid from "react-bootstrap/Grid";
 // import BillEditButton from "../billEditButton/BillEditButton";
@@ -44,8 +46,11 @@ class BillList extends React.Component<IBillListProps, {}> {
             <td>{bill.date}</td>
             <td>{bill.amount}</td>
             <td>
-              {/* <BillEditButton id={bill.id} /> */}
-              {/* <BillCloseButton id={bill.id} /> */}
+              <BillEditButton id={bill.id} onEditBill={this.props.onEditBill} />
+              <BillCloseButton
+                id={bill.id}
+                onRemoveBill={this.props.onRemoveBill}
+              />
             </td>
           </tr>
         );

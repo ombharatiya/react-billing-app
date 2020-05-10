@@ -5,6 +5,8 @@ import { GetNewBillIdResponse } from "src/services/billsServices/getNewBillId/Ge
 
 export enum BillsActionType {
   GetSelectedBillCard = "GET_SELECTED_BILL_CARD",
+  SetSelectedBillCard = "SET_SELECTED_BILL_CARD",
+
   GetNewBillIdStart = "GET_NEW_BILLID_START",
   GetNewBillIdSuccess = "GET_NEW_BILLID_SUCCESS",
 
@@ -14,11 +16,18 @@ export enum BillsActionType {
   AddBillsStart = "ADD_BILL_START",
   AddBillsSuccess = "ADD_BILL_SUCCESS",
 
+  DeleteBillStart = "DELETE_BILL_START",
+  DeleteBillSuccess = "DELETE_BILL_SUCCESS",
+
   BillsError = "GET_BILLS_ERROR",
 }
 
 export interface GetSelectedBillPayload {
   // readonly selectedBillId: number | undefined;
+}
+
+export interface SetSelectedBillPayload {
+  readonly selectedBillId: number;
 }
 
 export interface GetNewBillIdStartPayload {
@@ -52,12 +61,21 @@ export interface AddBillsSuccessPayload {
   readonly response: GetBillsResponse;
 }
 
+export interface DeleteBillStartPayload {
+  readonly id: number;
+}
+
+export interface DeleteBillSuccessPayload {
+  readonly response: GetBillsResponse;
+}
+
 export interface BillsErrorPayload {
   readonly error: Error | any;
 }
 
 export type BillsPayload =
   | GetSelectedBillPayload
+  | SetSelectedBillPayload
   | GetNewBillIdStartPayload
   | GetNewBillIdSuccessPayload
   | GetBillsStartPayload
@@ -73,6 +91,11 @@ export class BillsActions {
   // getCardDetails
   public static getSelectedBill(data: GetSelectedBillPayload): BillsAction {
     return { type: BillsActionType.GetSelectedBillCard, data };
+  }
+
+  // setCardDetails
+  public static setSelectedBill(data: SetSelectedBillPayload): BillsAction {
+    return { type: BillsActionType.SetSelectedBillCard, data };
   }
 
   // getBills
@@ -94,6 +117,18 @@ export class BillsActions {
     return { type: BillsActionType.AddBillsSuccess, data };
   }
   public static addBillsError(data: BillsErrorPayload): BillsAction {
+    return { type: BillsActionType.BillsError, data };
+  }
+
+
+  // addBills
+  public static deleteBillStart(data: DeleteBillStartPayload): BillsAction {
+    return { type: BillsActionType.DeleteBillStart, data };
+  }
+  public static deleteBillSuccess(data: DeleteBillSuccessPayload): BillsAction {
+    return { type: BillsActionType.DeleteBillSuccess, data };
+  }
+  public static deleteBillError(data: BillsErrorPayload): BillsAction {
     return { type: BillsActionType.BillsError, data };
   }
 

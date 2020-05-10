@@ -7,6 +7,9 @@ import {
   BillsErrorPayload,
   AddBillsSuccessPayload,
   GetNewBillIdSuccessPayload,
+  SetSelectedBillPayload,
+  DeleteBillSuccessPayload,
+  DeleteBillStartPayload,
   // AddBillsStartPayload,
 } from "../actions/BillsActions";
 // import { budget } from "src/utils/constants";
@@ -30,6 +33,7 @@ export const billsReducers: (
   state = otherReducers(state, action);
   state = getReducers(state, action);
   state = addReducers(state, action);
+  state = deleteBillReducers(state, action);
   state = getNewBillIdReducers(state, action);
   return state;
 };
@@ -44,6 +48,13 @@ const otherReducers: (state: BillsState, action: BillsAction) => BillsState = (
       return {
         ...state,
         // selectedBillId: data.selectedBillId,
+      };
+    }
+    case BillsActionType.SetSelectedBillCard: {
+      const data = action.data as SetSelectedBillPayload;
+      return {
+        ...state,
+        selectedBillId: data.selectedBillId,
       };
     }
     default:
@@ -128,6 +139,55 @@ const addReducers: (state: BillsState, action: BillsAction) => BillsState = (
         ...state,
         loading: false,
         success: false,
+        selectedBillId: undefined,
+        error: data.error,
+      };
+    }
+
+    default:
+      return state;
+  }
+};
+
+const deleteBillReducers: (
+  state: BillsState,
+  action: BillsAction
+) => BillsState = (state = initialState, action) => {
+  // console.log("INSIDE BILLS ADD REDUCERS");
+  switch (action.type) {
+    case BillsActionType.DeleteBillStart: {
+      // const response = (action.data as DeleteBillStartPayload);
+      return {
+        ...state,
+        loading: true,
+        success: false,
+        error: undefined,
+      };
+    }
+
+    case BillsActionType.DeleteBillSuccess: {
+      const bills = (action.data as DeleteBillSuccessPayload).response.bills;
+      // const currentBills = state.bills ? state.bills : [];
+      // const newBills = [...currentBills, bill];
+      const newBillId = state.newBillId ? state.newBillId + 1 : 1001;
+      return {
+        ...state,
+        bills: bills,
+        newBillId: newBillId,
+        selectedBillId: undefined,
+        loading: false,
+        success: true,
+        error: undefined,
+      };
+    }
+
+    case BillsActionType.BillsError: {
+      const data = action.data as BillsErrorPayload;
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        selectedBillId: undefined,
         error: data.error,
       };
     }

@@ -26,7 +26,8 @@ interface PropsFromState extends ReducerState {
 
 interface PropsFromDispatch {
   readonly onInit: () => void;
-  readonly onSelectBill: (val: string) => void;
+  readonly onSelectBill: (id: number) => void;
+  readonly onRemoveBill: (id: number) => void;
 }
 
 // interface Statee {
@@ -46,26 +47,16 @@ class BillListPage extends React.Component<Props, {}> {
     // };
   }
 
-  componentDidMount() {
-    console.log("BillListPage componentdidmount props");
-    // var abc = await Promise.all([
-    //   setTimeout(() => {
-    //     const abcd = "";
-    //   }, 5000),
-    // ]);
-    // setTimeout(() => {
-    //   console.log("BillListPage componentdidmount props2");
-    //   this.setState({ load: false });
-    // }, 5000);
-    console.log(this.props);
-  }
-
   public render() {
     console.log("render", this.props.loading);
     return (
       <div className="BillListPage">
         {/* {this.state.load && <Loading />} */}
-        <BillList bills={this.props.bills} />
+        <BillList
+          bills={this.props.bills}
+          onRemoveBill={this.props.onRemoveBill}
+          onEditBill={this.props.onSelectBill}
+        />
       </div>
     );
   }
@@ -91,15 +82,34 @@ const mapStateToProps: (state: ApplicationState) => PropsFromState = (
 const mapDispatchToProps: (
   dispatch: React.Dispatch<AnyAction>
 ) => PropsFromDispatch = (dispatch) => ({
-  onSelectBill: (billId: string) => {
-    dispatch(BillsActions.getSelectedBill({ selectedBillId: billId }));
-  },
   onInit: () => {
     console.log("BillListPage onInit");
     dispatch(BillsActions.getBillsStart({}));
+  },
+  onSelectBill: (billId: number) => {
+    dispatch(BillsActions.setSelectedBill({ selectedBillId: billId }));
+  },
+  onRemoveBill: (id: number) => {
+    dispatch(BillsActions.deleteBillStart({ id }));
   },
 });
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(BillListPage)
 ) as any;
+
+
+
+  // componentDidMount() {
+  //   console.log("BillListPage componentdidmount props");
+  //   // var abc = await Promise.all([
+  //   //   setTimeout(() => {
+  //   //     const abcd = "";
+  //   //   }, 5000),
+  //   // ]);
+  //   // setTimeout(() => {
+  //   //   console.log("BillListPage componentdidmount props2");
+  //   //   this.setState({ load: false });
+  //   // }, 5000);
+  //   console.log(this.props);
+  // }

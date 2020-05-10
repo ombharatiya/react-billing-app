@@ -4,6 +4,7 @@ import {
   BillsAction,
   BillsActions,
   AddBillsStartPayload,
+  DeleteBillStartPayload,
   // GetBillsStartPayload,
 } from "src/stores/billsStores/actions/BillsActions";
 import BillsService from "src/services/billsServices/BillsService";
@@ -48,6 +49,18 @@ export function* addBillsWorker(action: BillsAction): IterableIterator<any> {
   }
 }
 
+export function* deleteBillWorker(action: BillsAction): IterableIterator<any> {
+  const id = (action.data as DeleteBillStartPayload).id;
+  // console.log("inside addBillsWorker", bill);
+  try {
+    //@ts-ignore
+    const response: GetBillsResponse = yield BillsService.deleteBill(id);
+    yield put(BillsActions.deleteBillSuccess({ response }));
+  } catch (error) {
+    yield put(BillsActions.deleteBillError({ error }));
+  }
+}
+
 const billsWatcher = [
   takeEvery(BillsActionType.GetBillsStart, (action) =>
     getBillsWorker({
@@ -57,6 +70,12 @@ const billsWatcher = [
   ),
   takeEvery(BillsActionType.AddBillsStart, (action) =>
     addBillsWorker({
+      type: action.type,
+      data: (action as BillsAction).data,
+    })
+  ),
+  takeEvery(BillsActionType.DeleteBillStart, (action) =>
+    deleteBillWorker({
       type: action.type,
       data: (action as BillsAction).data,
     })

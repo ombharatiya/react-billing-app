@@ -43,6 +43,18 @@ export default class ApiService {
     return { bills: newData } as any;
   }
 
+  public deleteBill<T = void>(id: number): T {
+    const jsonData = localStorage.getItem(this.serviceType);
+    var data: any = [];
+    if (jsonData !== undefined && jsonData !== null) {
+      // console.log("inside ApiService post if jsonData", jsonData);
+      data = JSON.parse(jsonData);
+    }
+    const newData = data.filter((bill: Bill) => bill.id !== id);
+    localStorage.setItem(this.serviceType, JSON.stringify(newData));
+    return { bills: newData } as any;
+  }
+
   public getNewBillId<T = void>(): T {
     console.log("###############getNewBillId");
     if (localStorage.getItem("billId") === null) {
@@ -52,42 +64,43 @@ export default class ApiService {
     const newBillId = Number(billId);
     return { newBillId } as any;
   }
-  // public getNewBillId<T = void>(): T {
-  //   var newBillId = 1000;
-  //   if (localStorage.getItem("billId") === null) {
-  //     localStorage.setItem("billId", "1000");
-  //   }
-  //   const billId = localStorage.getItem("billId");
-  //   // if (billId !== undefined && billId !== null) {
-  //   //   // console.log("inside ApiService post if jsonData", jsonData);
-  //   //   newBillId = Number(billId);
-  //   // }
-  //   return { newBillId } as any;
-  // }
-
-  // public postBill<T = void>(bill: Bill): T {
-  //   // console.log("inside ApiService post", bill);
-  //   // console.log("inside ApiService this.serviceType", this.serviceType);
-  //   const jsonData = localStorage.getItem(this.serviceType);
-  //   // console.log("inside ApiService post jsonData", jsonData);
-  //   var data: any = [];
-  //   if (jsonData !== undefined && jsonData !== null) {
-  //     // console.log("inside ApiService post if jsonData", jsonData);
-  //     data = JSON.parse(jsonData);
-  //   }
-  //   // const data: any = jsonData ? JSON.parse(jsonData) : [];
-  //   // console.log("inside ApiService post data", data);
-  //   const newData: any = [...data, bill];
-  //   // console.log("inside ApiService post newData", newData);
-  //   localStorage.setItem(this.serviceType, JSON.stringify(newData));
-
-  //   var newBillId = 1000;
-  //   const billId = localStorage.getItem("billId");
-  //   if (billId !== undefined && billId !== null) {
-  //     // console.log("inside ApiService post if jsonData", jsonData);
-  //     newBillId = Number(billId);
-  //   }
-  //   localStorage.setItem("billId", String(newBillId + 1));
-  //   return { bills: newData } as any;
-  // }
 }
+
+// public getNewBillId<T = void>(): T {
+//   var newBillId = 1000;
+//   if (localStorage.getItem("billId") === null) {
+//     localStorage.setItem("billId", "1000");
+//   }
+//   const billId = localStorage.getItem("billId");
+//   // if (billId !== undefined && billId !== null) {
+//   //   // console.log("inside ApiService post if jsonData", jsonData);
+//   //   newBillId = Number(billId);
+//   // }
+//   return { newBillId } as any;
+// }
+
+// public postBill<T = void>(bill: Bill): T {
+//   // console.log("inside ApiService post", bill);
+//   // console.log("inside ApiService this.serviceType", this.serviceType);
+//   const jsonData = localStorage.getItem(this.serviceType);
+//   // console.log("inside ApiService post jsonData", jsonData);
+//   var data: any = [];
+//   if (jsonData !== undefined && jsonData !== null) {
+//     // console.log("inside ApiService post if jsonData", jsonData);
+//     data = JSON.parse(jsonData);
+//   }
+//   // const data: any = jsonData ? JSON.parse(jsonData) : [];
+//   // console.log("inside ApiService post data", data);
+//   const newData: any = [...data, bill];
+//   // console.log("inside ApiService post newData", newData);
+//   localStorage.setItem(this.serviceType, JSON.stringify(newData));
+
+//   var newBillId = 1000;
+//   const billId = localStorage.getItem("billId");
+//   if (billId !== undefined && billId !== null) {
+//     // console.log("inside ApiService post if jsonData", jsonData);
+//     newBillId = Number(billId);
+//   }
+//   localStorage.setItem("billId", String(newBillId + 1));
+//   return { bills: newData } as any;
+// }

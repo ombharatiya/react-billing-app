@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {
   getReverseFormattedDate,
   getFormattedDate,
-  getCurrentDate,
+  // getCurrentDate,
 } from "../utils/billFormUtils";
 import { Bill } from "src/model/Bill";
 
@@ -20,7 +20,12 @@ export interface BillFormProps {
   onAddBill: (props: Bill) => void;
 }
 
-type BillFormState = Bill;
+// type BillFormState = Bill;
+
+export interface BillFormState {
+  bill: Bill;
+  validFormText: boolean;
+}
 
 class BillForm extends React.Component<BillFormProps, BillFormState> {
   // constructor(props: IBillFormProps, context: any) {
@@ -29,15 +34,12 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
   constructor(props: BillFormProps, context: any) {
     super(props, context);
     this.state = {
-      ...this.props.bill,
+      bill: this.props.bill,
+      validFormText: false,
     };
     // this.state = this.props.bill;
   }
   componentDidMount = () => {
-    console.log(
-      "||||||||||||||||||||||||BillsForm componentDidMount state",
-      this.state
-    );
     this.setState({
       ...this.state,
       ...this.props.bill,
@@ -48,7 +50,7 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
     // console.log("BillsForm render state");
     // console.log(this.state);
     // const formState = this.props.bill;
-    const { description, amount, category, date } = { ...this.state };
+    const { validFormText, bill } = { ...this.state };
     return (
       <form onSubmit={this.handleSubmit} className="padding-20px">
         <Row>
@@ -61,7 +63,7 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
               type="text"
               placeholder="description"
               onChange={this.inputChange}
-              value={description}
+              value={bill.description}
             />
             <br />
             <br />
@@ -72,19 +74,19 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
               pattern="^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$"
               // pattern="[0-9]*"
               onChange={this.handleAmountChange}
-              value={amount}
+              value={bill.amount}
             />
             <Row>
               <Col sm={6} xs={12}>
                 <SelectBox
-                  selectedCategory={category}
+                  selectedCategory={bill.category}
                   onSelectCategory={this.handleSelectCategory}
                 />
               </Col>
               <Col sm={6} xs={12}>
                 <div className="date-picker-dimension">
                   <DatePicker
-                    selected={new Date(getReverseFormattedDate(date))}
+                    selected={new Date(getReverseFormattedDate(bill.date))}
                     onChange={this.handleSelectDate}
                   />
                 </div>
@@ -92,13 +94,23 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
             </Row>
           </Col>
           <Col sm={3} xs={12}>
-            <Button
-              className="form-input-button"
-              // bsStyle="info"
-              type="submit"
-            >
-              Add Bill
-            </Button>
+            <Row>
+              <Button
+                className="form-input-button"
+                // bsStyle="info"
+                type="submit"
+              >
+                Add Bill
+              </Button>
+            </Row>
+            <br />
+            {validFormText && (
+              <Row>
+                <div className="red-text">
+                  Fill all the details and try again!
+                </div>
+              </Row>
+            )}
           </Col>
         </Row>
       </form>
@@ -107,44 +119,88 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
 
   private onAddBill() {
     // console.log("BillForm onAddBill ", this.state);
-    this.props.onAddBill(this.state);
+    this.props.onAddBill(this.state.bill);
     this.updateStateOnSubmit();
   }
 
   private updateStateOnSubmit() {
     // console.log("updateStateOnSubmit SUBMITTED");
     this.setState({
-      ...this.props.bill,
+      bill: this.props.bill,
+      validFormText: false,
     });
+  }
+  private isValidated() {
+    // console.log("updateStateOnSubmit SUBMITTED");
+    const { amount, description, category } = { ...this.state.bill };
+    return (
+      amount !== 0 &&
+      amount !== null &&
+      "" !== String(amount) &&
+      description !== "" &&
+      category !== "Select a Category"
+    );
   }
 
   private handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    this.onAddBill();
+    if (this.isValidated()) {
+      this.onAddBill();
+    } else {
+      this.setState({
+        ...this.state,
+        validFormText: true,
+      });
+    }
   };
 
   private inputChange = (e: any) => {
-    this.setState({
+    const bill = {
+      ...this.state.bill,
       description: e.target.value,
+    };
+    this.setState({
+      ...this.state,
+      bill,
     });
   };
 
   private handleAmountChange = (evt: any) => {
     const financialGoal = evt.target.validity.valid
       ? evt.target.value
-      : this.state.amount;
-    this.setState({ amount: financialGoal });
+      : this.state.bill.amount;
+    const bill = {
+      ...this.state.bill,
+      amount: financialGoal,
+    };
+    this.setState({
+      ...this.state,
+      bill,
+    });
   };
 
   private handleSelectDate = (evt: any) => {
     // console.log("handleSelectDate", evt);
-    const newdate = getFormattedDate(evt);
-    this.setState({ date: newdate });
+    const bill = {
+      ...this.state.bill,
+      date: getFormattedDate(evt),
+    };
+    this.setState({
+      ...this.state,
+      bill,
+    });
   };
 
   private handleSelectCategory = (evt: any) => {
     // console.log("handleSelectCategory", evt);
-    this.setState({ category: evt });
+    const bill = {
+      ...this.state.bill,
+      category: evt,
+    };
+    this.setState({
+      ...this.state,
+      bill,
+    });
   };
 }
 
