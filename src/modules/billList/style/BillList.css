@@ -17,3 +17,7 @@ my-header {
 .max-width-stretch {
   width: 100%;
 }
+
+.width-fit-content {
+  max-width: fit-content;
+}

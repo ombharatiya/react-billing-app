@@ -14,6 +14,7 @@ import {
   // getCurrentDate,
 } from "../utils/billFormUtils";
 import { Bill } from "src/model/Bill";
+import { categories } from "src/utils/constants";
 
 export interface BillFormProps {
   bill: Bill;
@@ -80,6 +81,7 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
             <Row>
               <Col sm={6} xs={12}>
                 <SelectBox
+                  options={categories}
                   selectedCategory={bill.category}
                   onSelectCategory={this.handleSelectCategory}
                 />
@@ -150,7 +152,7 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
       amount !== null &&
       "" !== String(amount) &&
       description !== "" &&
-      category !== "Select a Category"
+      category !== "Category"
     );
   }
 

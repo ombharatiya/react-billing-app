@@ -118,7 +118,7 @@ class BillFormPage extends React.Component<Props, IState> {
     id: this.props.newBillId ? this.props.newBillId : 2000,
     description: "",
     amount: 0,
-    category: "Select a Category",
+    category: "Category",
     date: getCurrentDate(),
   });
 

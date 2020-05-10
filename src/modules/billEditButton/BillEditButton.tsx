@@ -18,7 +18,7 @@ class BillEditButton extends React.Component<IBillEditButtonProps, {}> {
         // bsStyle="warning"
         onClick={this.handleClick}
       >
-        edit
+        Edit
       </Button>
     );
   }

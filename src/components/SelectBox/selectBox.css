@@ -7,3 +7,7 @@
 .half-width-screen {
   max-width: 50%;
 }
+
+.margin-bottom-0p2rem {
+  margin-bottom: 0.2rem;
+}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { categories } from "src/utils/constants";
 import "./selectBox.css";
 // const options = [
 //   "Select an Option",
@@ -10,6 +9,7 @@ import "./selectBox.css";
 // ];
 
 export interface SelectBoxProps {
+  readonly options: string[];
   readonly selectedCategory: string;
   readonly onSelectCategory: (props: string) => void;
 }
@@ -30,7 +30,7 @@ class SelectBox extends React.Component<SelectBoxProps, SelectBoxState> {
   }
 
   public onChange = (e: any) => {
-    if (e.target.value === "Select a Category") {
+    if (e.target.value === "Category") {
       this.setState({
         value: e.target.value,
         valid: false,
@@ -45,18 +45,20 @@ class SelectBox extends React.Component<SelectBoxProps, SelectBoxState> {
   };
 
   public render() {
-    // console.log(this.state);
+    const { value, valid } = { ...this.state };
+    const { options } = { ...this.props };
+    console.log(this.state);
     return (
-      <div className="form-group">
+      <div className="form-group margin-bottom-0p2rem">
         {/* <label htmlFor="select2">Select2</label> */}
         <br />
         <select
-          value={this.state.value}
+          value={value}
           onChange={this.onChange}
-          className={this.state.valid ? "form-control" : "form-control invalid"}
+          className={valid ? "form-control" : "form-control invalid"}
         >
-          <option value={"Select a Category"}>{"Select a Category"}</option>
-          {categories.map((option) => {
+          <option value={value}>{value}</option>
+          {options.map((option) => {
             return (
               <option value={option} key={option}>
                 {option}

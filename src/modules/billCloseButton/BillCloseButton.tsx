@@ -20,7 +20,7 @@ class BillCloseButton extends React.Component<IBillCloseButtonProps, {}> {
           //  bsStyle="danger"
           onClick={this.handleClick}
         >
-          delete
+          Delete
         </Button>
       </span>
     );

@@ -46,10 +46,15 @@ class BillListPage extends React.Component<Props, {}> {
           bills={this.props.bills}
           onRemoveBill={this.props.onRemoveBill}
           onEditBill={this.onSelectBill}
+          onCreateNewBill={this.onCreateNewBill}
         />
       </div>
     );
   }
+
+  private onCreateNewBill = () => {
+    this.props.history.push(routes.add.view());
+  };
 
   private onSelectBill = (id: number) => {
     // console.log("BillListPage onSelectBill ", id);
