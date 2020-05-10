@@ -16,6 +16,9 @@ export enum BillsActionType {
   AddBillsStart = "ADD_BILL_START",
   AddBillsSuccess = "ADD_BILL_SUCCESS",
 
+  EditBillsStart = "EDIT_BILL_START",
+  EditBillsSuccess = "EDIT_BILL_SUCCESS",
+
   DeleteBillStart = "DELETE_BILL_START",
   DeleteBillSuccess = "DELETE_BILL_SUCCESS",
 
@@ -61,6 +64,14 @@ export interface AddBillsSuccessPayload {
   readonly response: GetBillsResponse;
 }
 
+export interface EditBillsStartPayload {
+  readonly bill: Bill;
+}
+
+export interface EditBillsSuccessPayload {
+  readonly response: GetBillsResponse;
+}
+
 export interface DeleteBillStartPayload {
   readonly id: number;
 }
@@ -82,6 +93,8 @@ export type BillsPayload =
   | GetBillsSuccessPayload
   | AddBillsStartPayload
   | AddBillsSuccessPayload
+  | EditBillsStartPayload
+  | EditBillsSuccessPayload
   | BillsErrorPayload
   | null;
 
@@ -120,6 +133,16 @@ export class BillsActions {
     return { type: BillsActionType.BillsError, data };
   }
 
+  // editBills
+  public static editBillsStart(data: EditBillsStartPayload): BillsAction {
+    return { type: BillsActionType.EditBillsStart, data };
+  }
+  public static editBillsSuccess(data: EditBillsSuccessPayload): BillsAction {
+    return { type: BillsActionType.EditBillsSuccess, data };
+  }
+  public static editBillsError(data: BillsErrorPayload): BillsAction {
+    return { type: BillsActionType.BillsError, data };
+  }
 
   // addBills
   public static deleteBillStart(data: DeleteBillStartPayload): BillsAction {

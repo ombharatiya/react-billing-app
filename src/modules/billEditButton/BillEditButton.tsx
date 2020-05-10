@@ -8,7 +8,6 @@ class BillEditButton extends React.Component<IBillEditButtonProps, {}> {
   // }
 
   public handleClick = () => {
-    console.log("got id: ", this.props.id);
     this.onEditBill();
   };
 

@@ -10,6 +10,7 @@ import {
   SetSelectedBillPayload,
   DeleteBillSuccessPayload,
   DeleteBillStartPayload,
+  EditBillsSuccessPayload,
   // AddBillsStartPayload,
 } from "../actions/BillsActions";
 // import { budget } from "src/utils/constants";
@@ -33,6 +34,7 @@ export const billsReducers: (
   state = otherReducers(state, action);
   state = getReducers(state, action);
   state = addReducers(state, action);
+  state = editReducers(state, action);
   state = deleteBillReducers(state, action);
   state = getNewBillIdReducers(state, action);
   return state;
@@ -69,12 +71,10 @@ const getReducers: (state: BillsState, action: BillsAction) => BillsState = (
   // console.log("INSIDE BILLS GET REDUCERS");
   switch (action.type) {
     case BillsActionType.GetBillsStart: {
-      console.log("getReducers GetBillsStart");
       return { ...state, loading: true, success: false, error: undefined };
     }
 
     case BillsActionType.GetBillsSuccess: {
-      console.log("getReducers GetBillsSuccess");
       const response = (action.data as GetBillsSuccessPayload).response;
       return {
         ...state,
@@ -86,7 +86,6 @@ const getReducers: (state: BillsState, action: BillsAction) => BillsState = (
     }
 
     case BillsActionType.BillsError: {
-      console.log("getReducers BillsError");
       const data = action.data as BillsErrorPayload;
       return {
         ...state,
@@ -105,7 +104,6 @@ const addReducers: (state: BillsState, action: BillsAction) => BillsState = (
   state = initialState,
   action
 ) => {
-  // console.log("INSIDE BILLS ADD REDUCERS");
   switch (action.type) {
     case BillsActionType.AddBillsStart: {
       // const response = (action.data as AddBillsSuccessPayload);
@@ -119,6 +117,51 @@ const addReducers: (state: BillsState, action: BillsAction) => BillsState = (
 
     case BillsActionType.AddBillsSuccess: {
       const bills = (action.data as AddBillsSuccessPayload).response.bills;
+      const newBillId = state.newBillId ? state.newBillId + 1 : 1001;
+      return {
+        ...state,
+        bills: bills,
+        newBillId: newBillId,
+        selectedBillId: undefined,
+        loading: false,
+        success: true,
+        error: undefined,
+      };
+    }
+
+    case BillsActionType.BillsError: {
+      const data = action.data as BillsErrorPayload;
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        selectedBillId: undefined,
+        error: data.error,
+      };
+    }
+
+    default:
+      return state;
+  }
+};
+
+const editReducers: (state: BillsState, action: BillsAction) => BillsState = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case BillsActionType.EditBillsStart: {
+      // const response = (action.data as EditBillsSuccessPayload);
+      return {
+        ...state,
+        loading: true,
+        success: false,
+        error: undefined,
+      };
+    }
+
+    case BillsActionType.EditBillsSuccess: {
+      const bills = (action.data as EditBillsSuccessPayload).response.bills;
       // const currentBills = state.bills ? state.bills : [];
       // const newBills = [...currentBills, bill];
       const newBillId = state.newBillId ? state.newBillId + 1 : 1001;
@@ -153,7 +196,6 @@ const deleteBillReducers: (
   state: BillsState,
   action: BillsAction
 ) => BillsState = (state = initialState, action) => {
-  // console.log("INSIDE BILLS ADD REDUCERS");
   switch (action.type) {
     case BillsActionType.DeleteBillStart: {
       // const response = (action.data as DeleteBillStartPayload);
@@ -201,8 +243,6 @@ const getNewBillIdReducers: (
   state: BillsState,
   action: BillsAction
 ) => BillsState = (state = initialState, action) => {
-  // console.log("INSIDE NEW BILLS ID GET REDUCERS");
-
   switch (action.type) {
     case BillsActionType.GetNewBillIdStart: {
       return { ...state, loading: true, success: false, error: undefined };

@@ -18,6 +18,7 @@ import { Bill } from "src/model/Bill";
 export interface BillFormProps {
   bill: Bill;
   onAddBill: (props: Bill) => void;
+  onDiscardChanges: () => void;
 }
 
 // type BillFormState = Bill;
@@ -96,11 +97,22 @@ class BillForm extends React.Component<BillFormProps, BillFormState> {
           <Col sm={3} xs={12}>
             <Row>
               <Button
-                className="form-input-button"
+                className="form-input-button button-min-width-100"
                 // bsStyle="info"
                 type="submit"
               >
-                Add Bill
+                Save Bill
+              </Button>
+            </Row>
+            <br />
+            <Row>
+              <Button
+                className="form-cancel-button button-min-width-100"
+                // bsStyle="info"
+                type="button"
+                onClick={this.props.onDiscardChanges}
+              >
+                Discard
               </Button>
             </Row>
             <br />

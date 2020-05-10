@@ -5,7 +5,7 @@ import {
   BillsActions,
   AddBillsStartPayload,
   DeleteBillStartPayload,
-  // GetBillsStartPayload,
+  EditBillsStartPayload,
 } from "src/stores/billsStores/actions/BillsActions";
 import BillsService from "src/services/billsServices/BillsService";
 import { GetBillsResponse } from "src/services/billsServices/getBills/GetBillsResponse.data";
@@ -13,7 +13,6 @@ import { GetNewBillIdResponse } from "src/services/billsServices/getNewBillId/Ge
 
 export function* getBillsWorker(action: BillsAction): IterableIterator<any> {
   // const site = (action.data as GetBillsStartPayload).site;
-  // console.log("inside getBillsWorker");
   try {
     //@ts-ignore
     const response: GetBillsResponse = yield BillsService.get();
@@ -27,7 +26,6 @@ export function* getNewBillIdWorker(
   action: BillsAction
 ): IterableIterator<any> {
   // const site = (action.data as GetBillsStartPayload).site;
-  console.log("inside getNewBillIdWorker");
   try {
     //@ts-ignore
     const response: GetNewBillIdResponse = yield BillsService.getNewBillId();
@@ -39,7 +37,6 @@ export function* getNewBillIdWorker(
 
 export function* addBillsWorker(action: BillsAction): IterableIterator<any> {
   const bill = (action.data as AddBillsStartPayload).bill;
-  // console.log("inside addBillsWorker", bill);
   try {
     //@ts-ignore
     const response: GetBillsResponse = yield BillsService.post(bill);
@@ -49,9 +46,19 @@ export function* addBillsWorker(action: BillsAction): IterableIterator<any> {
   }
 }
 
+export function* editBillsWorker(action: BillsAction): IterableIterator<any> {
+  const bill = (action.data as EditBillsStartPayload).bill;
+  try {
+    //@ts-ignore
+    const response: GetBillsResponse = yield BillsService.edit(bill);
+    yield put(BillsActions.editBillsSuccess({ response }));
+  } catch (error) {
+    yield put(BillsActions.editBillsError({ error }));
+  }
+}
+
 export function* deleteBillWorker(action: BillsAction): IterableIterator<any> {
   const id = (action.data as DeleteBillStartPayload).id;
-  // console.log("inside addBillsWorker", bill);
   try {
     //@ts-ignore
     const response: GetBillsResponse = yield BillsService.deleteBill(id);
@@ -70,6 +77,12 @@ const billsWatcher = [
   ),
   takeEvery(BillsActionType.AddBillsStart, (action) =>
     addBillsWorker({
+      type: action.type,
+      data: (action as BillsAction).data,
+    })
+  ),
+  takeEvery(BillsActionType.EditBillsStart, (action) =>
+    editBillsWorker({
       type: action.type,
       data: (action as BillsAction).data,
     })

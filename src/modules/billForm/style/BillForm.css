@@ -9,6 +9,21 @@
   color: #222;
 }
 
+.form-cancel-button {
+  background-color: #000;
+  border-color: #222;
+  color: #e6ceff;
+}
+.form-cancel-button:hover {
+  background-color: #222;
+  border-color: #826fa9;
+  color: #fff;
+}
+
+.button-min-width-100 {
+  min-width: 100px;
+}
+
 .date-picker-dimension {
   margin: 5px;
   height: 50px;

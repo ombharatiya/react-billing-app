@@ -22,6 +22,7 @@ interface PropsFromState extends ReducerState {
 
 interface PropsFromDispatch {
   readonly onAddBill: (newBill: Bill) => void;
+  readonly onEditBill: (newBill: Bill) => void;
   readonly onInit: () => void;
 }
 
@@ -42,9 +43,9 @@ class BillFormPage extends React.Component<Props, IState> {
     super(props, context);
     // console.log()
     this.state = {
-      bill: this.defaultBillState(),
+      bill: this.getLocalBillState(),
     };
-    this.initialize(props);
+    this.initialize();
   }
 
   // componentDidMount() {
@@ -59,9 +60,21 @@ class BillFormPage extends React.Component<Props, IState> {
   //   }
   // }
   componentWillReceiveProps(nextProps: Props) {
-    if (this.state.bill.id !== nextProps.newBillId) {
+    if (
+      this.state.bill.id !== nextProps.newBillId &&
+      nextProps.selectedBillId === undefined
+    ) {
       var bill = this.state.bill;
       bill.id = nextProps.newBillId ? nextProps.newBillId : 999;
+      this.setState({
+        ...this.state,
+        bill,
+      });
+    } else if (
+      this.state.bill.id !== nextProps.newBillId &&
+      nextProps.selectedBillId !== undefined
+    ) {
+      const bill = this.getLocalBillState();
       this.setState({
         ...this.state,
         bill,
@@ -76,22 +89,30 @@ class BillFormPage extends React.Component<Props, IState> {
     return (
       <div className="BillFormPage">
         {this.props.success && (
-          <BillForm bill={newBillState} onAddBill={this.onAddBill} />
+          <BillForm
+            bill={newBillState}
+            onAddBill={this.onAddBill}
+            onDiscardChanges={this.discardChanges}
+          />
         )}
       </div>
     );
   }
 
-  private initialize(props: Props) {
-    this.props.onInit();
-  }
+  private discardChanges = () => {
+    this.props.history.push(routes.bills.view());
+  };
 
-  private currentBillState() {
-    if (this.props.selectedBillId === undefined) {
-      return this.defaultBillState();
-    }
-    return this.defaultBillState2();
-  }
+  private initialize = () => {
+    this.props.onInit();
+  };
+
+  // private currentBillState() {
+  //   if (this.props.selectedBillId === undefined) {
+  //     return this.defaultBillState();
+  //   }
+  //   return this.defaultBillState2();
+  // }
 
   private defaultBillState = () => ({
     id: this.props.newBillId ? this.props.newBillId : 2000,
@@ -101,17 +122,23 @@ class BillFormPage extends React.Component<Props, IState> {
     date: getCurrentDate(),
   });
 
-  private defaultBillState2 = () => ({
-    id: this.props.newBillId ? this.props.newBillId : 2000,
-    description: "ABCD",
-    amount: 600000,
-    category: "Select a Category",
-    date: getCurrentDate(),
-  });
+  private getLocalBillState = () => {
+    const { selectedBillId, bills } = { ...this.props };
+    if (bills !== undefined && selectedBillId !== undefined) {
+      var billObj = bills.find((bill) => {
+        return bill.id === selectedBillId;
+      });
+      if (billObj !== undefined) return billObj;
+    }
+    return this.defaultBillState();
+  };
 
   private onAddBill = (bill: Bill) => {
     // console.log("BillFormPage onAddBill ", bill);
-    this.props.onAddBill(bill);
+    const { selectedBillId } = { ...this.props };
+    if (selectedBillId !== undefined && selectedBillId === bill.id) {
+      this.props.onEditBill(bill);
+    } else this.props.onAddBill(bill);
     this.props.history.push(routes.bills.view());
   };
 }
@@ -119,7 +146,7 @@ class BillFormPage extends React.Component<Props, IState> {
 const mapStateToProps: (state: ApplicationState) => PropsFromState = (
   state
 ) => {
-  console.log("BillsFormPage state", state);
+  // console.log("BillsFormPage state", state);
   // console.log(state);
   return {
     loading: state.bills.loading,
@@ -139,8 +166,12 @@ const mapDispatchToProps: (
     // console.log("BillFormPage onAddBill");
     dispatch(BillsActions.addBillsStart({ bill: newBill }));
   },
+  onEditBill: (newBill: Bill) => {
+    // console.log("BillFormPage onAddBill");
+    dispatch(BillsActions.editBillsStart({ bill: newBill }));
+  },
   onInit: () => {
-    console.log("BillFormPage despatch onInit");
+    // console.log("BillFormPage despatch onInit");
     dispatch(BillsActions.getNewBillIdStart({}));
     dispatch(BillsActions.getBillsStart({}));
   },

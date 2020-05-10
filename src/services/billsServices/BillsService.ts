@@ -17,6 +17,10 @@ export class BillsService {
     return this.service.postBill<GetBillsResponse>(bill);
   }
 
+  public edit(bill: Bill): GetBillsResponse {
+    return this.service.editBill<GetBillsResponse>(bill);
+  }
+
   public deleteBill(id: number): GetBillsResponse {
     return this.service.deleteBill<GetBillsResponse>(id);
   }

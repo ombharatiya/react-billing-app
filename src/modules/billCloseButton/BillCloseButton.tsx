@@ -9,7 +9,6 @@ class BillCloseButton extends React.Component<IBillCloseButtonProps, {}> {
   // }
 
   public handleClick = () => {
-    console.log("got id: ", this.props.id);
     this.onRemoveBill();
   };
 
@@ -33,17 +32,3 @@ class BillCloseButton extends React.Component<IBillCloseButtonProps, {}> {
 }
 
 export default BillCloseButton;
-
-// const mapActionsToProps = {
-//   onRemoveBill: deleteBill,
-// };
-
-// const mapDispatchToProps: (dispatch: React.Dispatch<AnyAction>) => any = (
-//   dispatch
-// ) => ({
-//   onRemoveBill: (id: number) => {
-//     dispatch(BillsActions.deleteBillStart({ id }));
-//   },
-// });
-
-// export default connect(undefined, mapDispatchToProps)(BillCloseButton);
