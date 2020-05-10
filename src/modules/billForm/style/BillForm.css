@@ -1,0 +1,55 @@
+.form-input-button {
+  background-color: #b29ddb;
+  border-color: #826fa9;
+  color: #222;
+}
+.form-input-button:hover {
+  background-color: #e5ceff;
+  border-color: #826fa9;
+  color: #222;
+}
+
+.date-picker-dimension {
+  margin: 5px;
+  height: 50px;
+  padding: 20px;
+}
+.max-width-window {
+  min-width: 100%;
+}
+
+.padding-20px {
+  padding: 20px;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.header {
+  background-color: #b39ddb;
+  height: 75px;
+  padding: 20px;
+  color: #222;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

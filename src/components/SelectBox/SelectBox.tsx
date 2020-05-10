@@ -45,7 +45,7 @@ class SelectBox extends React.Component<SelectBoxProps, SelectBoxState> {
   };
 
   public render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div className="form-group">
         {/* <label htmlFor="select2">Select2</label> */}

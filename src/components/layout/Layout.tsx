@@ -6,7 +6,7 @@ import Dashboard from "src/modules/dashboard/Dashboard";
 // import Overview from "../../modules/overview/Overview";
 import AppNavBar from "src/components/appNavBar/AppNavBar";
 import BillListPage from "src/modules/billList/container/BillListPage";
-import { initiateLocalStorageData } from "src/utils/utilities";
+// import { initiateLocalStorageData } from "src/utils/utilities";
 import BillFormPage from "src/modules/billForm/container/BillFormPage";
 // import BillList from "src/modules/billList/component/BillList";
 // import { connect } from "react-redux";
@@ -15,8 +15,8 @@ import BillFormPage from "src/modules/billForm/container/BillFormPage";
 class LayoutComponent extends React.Component<any, any> {
   public constructor(props: any, context: any) {
     super(props, context);
-    console.log("LAYOUT")
-    initiateLocalStorageData()
+    // console.log("LAYOUT")
+    // initiateLocalStorageData()
   }
 
   public render(): JSX.Element {
