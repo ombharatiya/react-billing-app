@@ -1,3 +1,19 @@
 my-header {
-    text-align: center
+  text-align: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.justify-content-space-evenly {
+  justify-content: space-evenly;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.max-width-stretch {
+  width: 100%;
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IBillEditButtonProps } from "./types/IBillEditButtonProps";
 import { Button } from "react-bootstrap";
-
+import "./BillEditButton.css";
 class BillEditButton extends React.Component<IBillEditButtonProps, {}> {
   // constructor(props: IBillEditButtonProps, context: any) {
   //   super(props, context);
@@ -15,6 +15,7 @@ class BillEditButton extends React.Component<IBillEditButtonProps, {}> {
   public render() {
     return (
       <Button
+        className="form-edit-button"
         // bsStyle="warning"
         onClick={this.handleClick}
       >

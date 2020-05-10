@@ -1,9 +1,7 @@
 import * as React from "react";
 import { IBillCloseButtonProps } from "./types/IBillCloseButtonProps";
-// import { connect } from "react-redux";
-// import { AnyAction } from "redux";
 import { Button } from "react-bootstrap";
-// import { BillsActions } from "src/stores/billsStores/actions/BillsActions";
+import "./BillCloseButton.css";
 
 class BillCloseButton extends React.Component<IBillCloseButtonProps, {}> {
   // constructor(props: IBillCloseButtonProps, context: any) {
@@ -17,12 +15,15 @@ class BillCloseButton extends React.Component<IBillCloseButtonProps, {}> {
 
   public render() {
     return (
-      <Button
-        //  bsStyle="danger"
-        onClick={this.handleClick}
-      >
-        x
-      </Button>
+      <span>
+        <Button
+          className="form-delete-button"
+          //  bsStyle="danger"
+          onClick={this.handleClick}
+        >
+          delete
+        </Button>
+      </span>
     );
   }
 

@@ -46,7 +46,9 @@ class BillList extends React.Component<IBillListProps, {}> {
             <td>{bill.date}</td>
             <td>{bill.amount}</td>
             <td>
+              {/* <div className="flex-row justify-content-space-evenly align-items-center max-width-stretch"></div> */}
               <BillEditButton id={bill.id} onEditBill={this.props.onEditBill} />
+              &nbsp;&nbsp;
               <BillCloseButton
                 id={bill.id}
                 onRemoveBill={this.props.onRemoveBill}
