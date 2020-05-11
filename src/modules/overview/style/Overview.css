@@ -1,0 +1,41 @@
+my-header {
+  text-align: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-space-evenly {
+  justify-content: space-evenly;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.max-width-stretch {
+  width: 100%;
+}
+
+.width-fit-content {
+  max-width: fit-content;
+}
+
+.max-height-200 {
+  max-height: 400px;
+}
+
+.purple-color {
+  color: #836fa9;
+}
