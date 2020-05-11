@@ -8,6 +8,7 @@ import AppNavBar from "src/components/appNavBar/AppNavBar";
 import BillListPage from "src/modules/billList/container/BillListPage";
 // import { initiateLocalStorageData } from "src/utils/utilities";
 import BillFormPage from "src/modules/billForm/container/BillFormPage";
+import OverviewPage from "src/modules/overview/container/OverviewPage";
 // import BillList from "src/modules/billList/component/BillList";
 // import { connect } from "react-redux";
 // import { Name } from "src/model/Name";
@@ -32,6 +33,11 @@ class LayoutComponent extends React.Component<any, any> {
                     path={routes.home.view()}
                     exact={true}
                     component={Dashboard}
+                  />
+                  <Route
+                    path={routes.overview.view()}
+                    exact={true}
+                    component={OverviewPage}
                   />
                   <Route
                     path={routes.add.view()}

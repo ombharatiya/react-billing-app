@@ -21,11 +21,12 @@ class AppNavBar extends React.Component<any, any> {
   public render() {
     return (
       <Navbar className="color-nav" variant="light">
-        <Navbar.Brand href={routes.bills.view()}>Bill Budget App</Navbar.Brand>
+        <Navbar.Brand href={routes.overview.view()}>Bill Budget App</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href={routes.home.view()}>Home</Nav.Link>
+          {/* <Nav.Link href={routes.home.view()}>Home</Nav.Link> */}
+          <Nav.Link href={routes.overview.view()}>Overview</Nav.Link>
           <Nav.Link href={routes.add.view()}>Create New Bill</Nav.Link>
-          <Nav.Link href={routes.bills.view()}>Overview</Nav.Link>
+          <Nav.Link href={routes.bills.view()}>All Bills</Nav.Link>
         </Nav>
         {/* <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />

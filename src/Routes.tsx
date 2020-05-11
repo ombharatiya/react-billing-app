@@ -2,10 +2,13 @@ export const routes = {
   home: {
     view: () => "/home",
   },
+  overview: {
+    view: () => "/",
+  },
   add: {
-    view: () => "/add",
+    view: () => "/form",
   },
   bills: {
-    view: () => "/",
+    view: () => "/bills",
   },
 };

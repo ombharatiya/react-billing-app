@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IBillListProps } from "../types/IBillListProps";
 import { IBillListState } from "../types/IBillListState";
-import { Bill } from "../../../model/Bill";
+import { Bill, Bills } from "../../../model/Bill";
 // import BillCloseButton from "../billCloseButton/BillCloseButton";
 import Table from "react-bootstrap/Table";
 import BillCloseButton from "src/modules/billCloseButton/BillCloseButton";
@@ -21,12 +21,13 @@ class BillList extends React.Component<IBillListProps, IBillListState> {
     super(props, context);
     this.state = {
       selectedCategory: ALL_CATEGORIES,
+      totalBill: 0,
     };
   }
 
   public render() {
     const { selectedCategory } = { ...this.state };
-    console.log("selectedCategory", selectedCategory);
+    // console.log("selectedCategory", selectedCategory);
     return (
       // <Grid>
       <Table striped={true} bordered={true} hover={true}>
@@ -52,8 +53,9 @@ class BillList extends React.Component<IBillListProps, IBillListState> {
             <th>action</th>
           </tr>
         </thead>
-        <tbody>{this.renderBills()}</tbody>
-        <tbody>{this.footerTable()}</tbody>
+        {this.renderBills()}
+        {/* <tbody>{this.renderBills()}</tbody> */}
+        {/* <tbody>{this.footerTable()}</tbody> */}
       </Table>
       //{/* </Grid> */}
     );
@@ -61,53 +63,110 @@ class BillList extends React.Component<IBillListProps, IBillListState> {
 
   public renderBills = () => {
     const billsList = this.getBillsListFiltered();
+    const sumAmount = this.getSumOfBills(billsList);
     // return budget.bills.map((bill: Bill, index: number) => {
-    if (billsList.length > 0)
-      return billsList.map((bill: Bill, index: number) => {
-        // console.log("renderBills", bill);
-        return (
-          <tr key={index}>
-            <td>{bill.description}</td>
-            <td>{bill.category}</td>
-            <td>{bill.date}</td>
-            <td>{bill.amount}</td>
-            <td>
-              {/* <div className="flex-row justify-content-space-evenly align-items-center max-width-stretch"></div> */}
-              <BillEditButton id={bill.id} onEditBill={this.props.onEditBill} />
-              &nbsp;&nbsp;
-              <BillCloseButton
-                id={bill.id}
-                onRemoveBill={this.props.onRemoveBill}
-              />
-            </td>
-          </tr>
-        );
-      });
-    else
-      return (
-        <tr>
-          <td align={"center"} colSpan={5}>
-            {"No Bill Present"}
-          </td>
-        </tr>
-      );
+    return (
+      <>
+        <tbody>
+          {billsList.length > 0 ? (
+            billsList.map((bill: Bill, index: number) => {
+              // console.log("renderBills", bill);
+              return (
+                <tr key={index}>
+                  <td>{bill.description}</td>
+                  <td>{bill.category}</td>
+                  <td>{bill.date}</td>
+                  <td>{bill.amount}</td>
+                  <td>
+                    {/* <div className="flex-row justify-content-space-evenly align-items-center max-width-stretch"></div> */}
+                    <BillEditButton
+                      id={bill.id}
+                      onEditBill={this.props.onEditBill}
+                    />
+                    &nbsp;&nbsp;
+                    <BillCloseButton
+                      id={bill.id}
+                      onRemoveBill={this.props.onRemoveBill}
+                    />
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td align={"center"} colSpan={5}>
+                {"No Bill Present"}
+              </td>
+            </tr>
+          )}
+        </tbody>
+        {this.footerTable(sumAmount)}
+      </>
+    );
   };
 
-  public footerTable = () => {
+  // public renderBills = () => {
+  //   const billsList = this.getBillsListFiltered();
+  //   // return budget.bills.map((bill: Bill, index: number) => {
+  //   if (billsList.length > 0)
+  //     return billsList.map((bill: Bill, index: number) => {
+  //       // console.log("renderBills", bill);
+  //       return (
+  //         <tr key={index}>
+  //           <td>{bill.description}</td>
+  //           <td>{bill.category}</td>
+  //           <td>{bill.date}</td>
+  //           <td>{bill.amount}</td>
+  //           <td>
+  //             {/* <div className="flex-row justify-content-space-evenly align-items-center max-width-stretch"></div> */}
+  //             <BillEditButton id={bill.id} onEditBill={this.props.onEditBill} />
+  //             &nbsp;&nbsp;
+  //             <BillCloseButton
+  //               id={bill.id}
+  //               onRemoveBill={this.props.onRemoveBill}
+  //             />
+  //           </td>
+  //         </tr>
+  //       );
+  //     });
+  //   else
+  //     return (
+  //       <tr>
+  //         <td align={"center"} colSpan={5}>
+  //           {"No Bill Present"}
+  //         </td>
+  //       </tr>
+  //     );
+  // };
+
+  public footerTable = (amt: number) => {
     return (
-      <tr>
-        <td align={"center"} colSpan={5}>
-          <Button
-            className="form-edit-button button-min-width-100"
-            // bsStyle="info"
-            type="button"
-            onClick={this.props.onCreateNewBill}
-          >
-            Create a New Bill
-          </Button>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td align={"center"} colSpan={5}>
+            Total Bill Amount: {amt}
+          </td>
+        </tr>
+        <tr>
+          <td align={"center"} colSpan={5}>
+            <Button
+              className="form-edit-button button-min-width-100"
+              // bsStyle="info"
+              type="button"
+              onClick={this.props.onCreateNewBill}
+            >
+              Create a New Bill
+            </Button>
+          </td>
+        </tr>
+      </tbody>
     );
+  };
+
+  private getSumOfBills = (bills: Bills) => {
+    return bills
+      .map((item: Bill) => item.amount)
+      .reduce((prev: number, next: number) => prev + Math.round(next), 0);
   };
 
   private getBillsListFiltered = () => {
