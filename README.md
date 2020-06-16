@@ -1,4 +1,4 @@
-# Bill Manager - React.js, Redux, Saga, localstorage
+# Bill Manager - React.js, Redux, Saga, Chart.js
 (by [@ombharatiya](https://www.linkedin.com/in/ombharatiya))
 
 - - -
@@ -8,12 +8,12 @@
 **Check the deployed app here : [Bill Insights](https://bill-insights.now.sh/).**
 
 - - -
-#### Problem Statement:
+## Problem Statement:
 
 Chinu owns a car wash business and needs help to manage various bills from his vendors. Need to build an application to help Chinu manage his monthly bills. The bill manager should show a bill dashboard (list of bills) with the total monthly billed amount.
 
 
-##### The app uses following libraries/packages for development, build and deployment:
+## The app uses following libraries/packages for development, build and deployment:
 
 - **[React.js](https://reactjs.org/)** - An open-source JavaScript library for building user interfaces & single-page or mobile applications.
 - **[Redux.js](https://redux.js.org/)** - A Predictable State Container for JS Apps
@@ -26,14 +26,80 @@ Chinu owns a car wash business and needs help to manage various bills from his v
 - **[TypeScript](https://github.com/Microsoft/TypeScript)** - a superset of JavaScript programming language that compiles to clean JavaScript output.
 
 
-#### Functional requirements:
+## Functional requirements:
 
 - The user must be able to manually add, edit and remove bills. (update the state locally)
 - The user must be able to filter bills by category. (category filter dropdown)
 - Draw a time-series chart of the monthly billing cycle.
 
 
+## Screens:
+
+1. **Overview Page** - Shows monthly bills in a graph
+
+![Overview](overview-graph.PNG)
+
+
+
+2. **Create/Edit Bill Screen** - Create or edit bills on this screen using a simple form
+
+![Create/Edit Bill](create-new-bill-form.PNG)
+
+
+
+
+3. **List all Bills Screen** - Create or edit bills on this screen using a simple form
+
+![List all Bills Screen](all-bills-list.PNG)
+
+
+## LocalStorage Data Storage
+
+We are storing the data in localstorage to persist data in case of page refresh.
+
+One bill object looks like following:
+
+```
+{
+"id": 1,
+"description": "Dominoes",
+"category": "FoodNDining",
+"amount": "430",
+"date": "01-02-2020"
+}
+```
+
+
+Here's a screenshot to show how local storage will look like:
+
+
+![localstorage](local-storage-data.PNG)
+
+
+## Docker to build and deploy
+
+to run the above app locally, you can simply run the command:
+
+
+### `docker-compose up --build`
+
+
+To create image run the command:
+
+### `docker build -t bill-insight`
+
+
+To run the built image, run the command:
+
+
+### `docker run -p 3000:3000 -it bill-insight -d`
+
+
+For more details about Docker and docker compose, check the [documentations](https://docs.docker.com/compose/).
+
+
 - - -
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -41,6 +107,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+
+
+### `npm install`
+
+Installs the important libraries to build and run the app.<br />
+
+In case of any issue while building the app, delete the `node_modules` folder in the root directory and run this command again.
+
 
 ### `npm start`
 
