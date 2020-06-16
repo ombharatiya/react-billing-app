@@ -1,3 +1,41 @@
+# Bill Manager - React.js, Redux, Saga, localstorage
+(by [@ombharatiya](https://www.linkedin.com/in/ombharatiya))
+
+- - -
+
+### A demo app to illustrate various features of a react.js application:
+
+**Check the deployed app here : [Bill Insights](https://bill-insights.now.sh/).**
+
+- - -
+#### Problem Statement:
+
+Chinu owns a car wash business and needs help to manage various bills from his vendors. Need to build an application to help Chinu manage his monthly bills. The bill manager should show a bill dashboard (list of bills) with the total monthly billed amount.
+
+
+##### The app uses following libraries/packages for development, build and deployment:
+
+- **[React.js](https://reactjs.org/)** - An open-source JavaScript library for building user interfaces & single-page or mobile applications.
+- **[Redux.js](https://redux.js.org/)** - A Predictable State Container for JS Apps
+- **[Redux-Saga](https://redux-saga.js.org/)** - A Redux Middleware library to handle Asynchronous Actions such as fetching data more easily & effciently
+- **[React-Router](https://www.npmjs.com/package/react-router)** - A package that provides the core routing functionality for React Router
+- **[Chart.js](https://www.chartjs.org/)** - an open-source JavaScript library to draw different types of charts by using the HTML5 canvas element
+- **LocalStorage** - Not a library but a feature that this app uses local storage to store data(temporary storage) and to maintain the new bill id
+- **[Docker](https://www.docker.com/)** - to package and run the app in a loosely isolated environment called a container
+- **[Vercel (formerly ZEIT)](https://vercel.com/)** - for Instant static deploys
+- **[TypeScript](https://github.com/Microsoft/TypeScript)** - a superset of JavaScript programming language that compiles to clean JavaScript output.
+
+
+#### Functional requirements:
+
+- The user must be able to manually add, edit and remove bills. (update the state locally)
+- The user must be able to filter bills by category. (category filter dropdown)
+- Draw a time-series chart of the monthly billing cycle.
+
+
+- - -
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -42,3 +80,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+---
+
+Thank you :)
+
+Copyright @ombharatiya
+
+---
